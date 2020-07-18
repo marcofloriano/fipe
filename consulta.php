@@ -1,9 +1,10 @@
-<?php
+<?php	
 	/**
 	 * Classe para consulta da API JSON de valores de veículos da tabela FIPE
 	 * Por Marco Floriano em 11/07/2020
 	 * http://fipeapi.appspot.com/
-	 */		
+	 */
+	
 	class Consulta
 	{
 		public $tipoVeiculo;
@@ -68,17 +69,9 @@
 
 		public function getResultado($marca_id, $veiculo_id, $modelo)
 		{
-			$preco = $this->getJson($this->baseURL() . $this->tipo . '/veiculo/' . $marca_id . '/' . $veiculo_id . '/' . $modelo . '.json' );
-			return $preco;
+			$resultado = $this->getJson($this->baseURL() . $this->tipo . '/veiculo/' . $marca_id . '/' . $veiculo_id . '/' . $modelo . '.json' );
+			return $resultado;
 		}
 	}
 
-	/*
-
-	$novaConsula = new Consulta("Carros");
-	echo "<br>";
-	var_dump ($novaConsula->getMarcas());
-
-	*/
-	
 ?>
