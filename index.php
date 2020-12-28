@@ -13,7 +13,7 @@
 <html>
 <body>
 	<div class="main">		
-		<h1><a href='/fipe'>Consulta FIPE</a></h1>
+		<h1><a href='index.php'>Consulta FIPE</a></h1>
 		<?php
 			if(isset($_GET["tipo"]) && !isset($_GET["marca"])) {
 				$form->marcaDoVeiculo($_GET["tipo"]);
