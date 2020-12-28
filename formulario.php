@@ -3,7 +3,7 @@
 	 * Classe para geração do formulário para consulta de veículos da tabela FIPE
 	 * Por Marco Floriano em 18/07/2020
 	 */
-
+	
 	class Formulario {
 
 		public function tipoDeVeiculo() { ?>

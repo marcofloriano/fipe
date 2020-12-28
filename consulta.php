@@ -4,7 +4,7 @@
 	 * Por Marco Floriano em 11/07/2020
 	 * http://fipeapi.appspot.com/
 	 */
-	
+
 	class Consulta
 	{
 		public $tipoVeiculo;

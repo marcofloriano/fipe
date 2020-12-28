@@ -1,6 +1,6 @@
-<?php 
+<?php
 	include('consulta.php');
-	include('formulario.php');
+	include('formulario.php');	
 
 	$form = new Formulario();
 ?>
@@ -55,7 +55,6 @@
 				$form->tipoDeVeiculo(); 
 			} 
 		?>
-
 	</div>
 </body>
 </html>
