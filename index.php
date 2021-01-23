@@ -1,6 +1,15 @@
 <?php
+	require __DIR__ . '/vendor/autoload.php';
 	include('consulta.php');
-	include('formulario.php');	
+	include('formulario.php');
+
+	ini_set('display_errors', 1);
+	ini_set('display_startup_errors', 1);
+	error_reporting(E_ALL);
+
+	use Symfony\Component\HttpFoundation\Request;
+
+	$request = Request::createFromGlobals();
 
 	$form = new Formulario();
 ?>
@@ -8,52 +17,69 @@
 <head>
 	<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="styles.css">
-
 </head>
 <html>
 <body>
 	<div class="main">		
 		<h1><a href='index.php'>Consulta FIPE</a></h1>
 		<?php
-			if(isset($_GET["tipo"]) && !isset($_GET["marca"])) {
-				$form->marcaDoVeiculo($_GET["tipo"]);
-			}
+		
+		/* Debug */
+		try {
 
-			elseif(isset($_GET["tipo"]) && isset($_GET["marca"]) && !isset($_GET["veiculo"])) { 
-				$tipo = $_GET["tipo"];
-				$novaConsula = new Consulta($tipo);
-				$marca_id = $novaConsula->getMarcaId($_GET["marca"]);
-				$marca_nome = $novaConsula->getMarcaNome($_GET["marca"]);
+			//dump($_GET['name']);
+			//dump($request->query->get('name'));
+			//dump($request);
+			dump($request->query->all());
 
-				$form->nomeDoVeiculo($tipo, $marca_id, $marca_nome, $novaConsula);				
-			}
+		} catch (Exception $e) {
 
-			elseif(isset($_GET["tipo"]) && isset($_GET["marca"]) && isset($_GET["veiculo"]) && !isset($_GET["modelo"])) { 
-				$tipo = $_GET["tipo"];
-				$novaConsula = new Consulta($tipo);
-				$marca_id = $novaConsula->getMarcaId($_GET["marca"]);
-				$marca_nome = $novaConsula->getMarcaNome($_GET["marca"]);
-				$veiculo_id = $novaConsula->getVeiculoId($_GET["veiculo"]);
-				$veiculo_nome = $novaConsula->getVeiculoNome($_GET["veiculo"]);
+			echo $e->getMessage();
 
-				$form->modeloDoVeiculo($tipo, $marca_id, $marca_nome, $veiculo_id, $veiculo_nome, $novaConsula );
-			} 
+		}
 
-			elseif(isset($_GET["tipo"]) && isset($_GET["marca"]) && isset($_GET["veiculo"]) && isset($_GET["modelo"])) { 
-				$tipo = $_GET["tipo"];
-				$modelo = $_GET["modelo"];
-				$novaConsula = new Consulta($tipo);
-				$marca_id = $novaConsula->getMarcaId($_GET["marca"]);				
-				$veiculo_id = $novaConsula->getVeiculoId($_GET["veiculo"]);
+		/* Consulta FIPE */
 
-				$form->resultado($tipo, $modelo, $novaConsula, $marca_id, $veiculo_id);
-				
-			} 
+		if( $request->query->get('tipo') && !$request->query->get('marca') ) {
+			$form->marcaDoVeiculo($_GET["tipo"]);
+		}
 
-			else { 
-				
-				$form->tipoDeVeiculo(); 
-			} 
+		elseif( $request->query->get('tipo') && $request->query->get('marca') && !$request->query->get('veiculo') ) { 
+			$tipo = $request->query->get('tipo');
+			$novaConsula = new Consulta($tipo);
+			$marca_id = $novaConsula->getMarcaId($request->query->get('marca'));
+			$marca_nome = $novaConsula->getMarcaNome($request->query->get('marca'));
+
+			$form->nomeDoVeiculo($tipo, $marca_id, $marca_nome, $novaConsula);				
+		}
+
+		elseif( $request->query->get('tipo') && $request->query->get('marca') && $request->query->get('veiculo') && !$request->query->get('modelo') ) { 
+			$tipo = $request->query->get('tipo');
+			$novaConsula = new Consulta($tipo);
+			$marca_id = $novaConsula->getMarcaId($request->query->get('marca'));
+			$marca_nome = $novaConsula->getMarcaNome($request->query->get('marca'));
+			$veiculo_id = $novaConsula->getVeiculoId($request->query->get('veiculo'));
+			$veiculo_nome = $novaConsula->getVeiculoNome($request->query->get('veiculo'));
+
+			$form->modeloDoVeiculo($tipo, $marca_id, $marca_nome, $veiculo_id, $veiculo_nome, $novaConsula );
+		} 
+
+		elseif( $request->query->get('tipo') && $request->query->get('marca') && $request->query->get('veiculo') && $request->query->get('modelo') ) { 
+			$tipo = $request->query->get('tipo');
+			$modelo = $request->query->get('modelo');
+			$novaConsula = new Consulta($tipo);
+			$marca_id = $novaConsula->getMarcaId($request->query->get('marca'));				
+			$veiculo_id = $novaConsula->getVeiculoId($request->query->get('veiculo'));
+
+			$form->resultado($tipo, $modelo, $novaConsula, $marca_id, $veiculo_id);
+			
+		} 
+
+		else { 
+			
+			$form->tipoDeVeiculo(); 
+		} 
+
 		?>
 	</div>
 </body>

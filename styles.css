@@ -1,6 +1,6 @@
 input[type=text], select {
 	width: 100%;
-	font-size: 16px;
+	font-size: 18px;
 	padding: 12px 20px;
 	margin: 8px 0;
 	display: inline-block;
@@ -11,7 +11,7 @@ input[type=text], select {
 
 input[type=submit], button {
 	width: 100%;
-	font-size: 18px;
+	font-size: 20px;
 	background-color: #4f6742;
 	color: white;
 	padding: 14px 20px;
@@ -27,10 +27,13 @@ input[type=submit]:hover {
 
 body {
   color: #444444;
+  background: rgb(50,49,68);
+  background: linear-gradient(90deg, rgba(50,49,68,1) 0%, rgba(90,90,97,0.93) 49%, rgba(46,48,48,0.98) 100%);
 }
 
 .main {
 	max-width: 50%;
+	margin-top: 10%;
 	margin-left: 25%;
 	border-radius: 5px;
 	background-color: #f2f2f2;
