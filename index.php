@@ -2,14 +2,17 @@
 	require __DIR__ . '/vendor/autoload.php';
 	include('consulta.php');
 	include('formulario.php');
+	
 
 	ini_set('display_errors', 1);
 	ini_set('display_startup_errors', 1);
 	error_reporting(E_ALL);
 
 	use Symfony\Component\HttpFoundation\Request;
+	use Symfony\Component\HttpFoundation\Response;
 
 	$request = Request::createFromGlobals();
+	$response = new Response();
 
 	$form = new Formulario();
 ?>
@@ -32,6 +35,10 @@
 			//dump($request);
 			dump($request->query->all());
 
+			//$response->setContent("Hello World!");
+			$response->prepare($request);
+			$response->send();
+
 		} catch (Exception $e) {
 
 			echo $e->getMessage();
@@ -41,7 +48,7 @@
 		/* Consulta FIPE */
 
 		if( $request->query->get('tipo') && !$request->query->get('marca') ) {
-			$form->marcaDoVeiculo($_GET["tipo"]);
+			$form->marcaDoVeiculo( $request->query->get('tipo') );
 		}
 
 		elseif( $request->query->get('tipo') && $request->query->get('marca') && !$request->query->get('veiculo') ) { 
