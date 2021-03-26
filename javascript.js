@@ -1,51 +1,110 @@
-// There are many ways to pick a DOM node; here we get the form itself and the email
-// input box, as well as the span element into which we will place the error message.
-const form  = document.getElementsByTagName('form')[0];
+const formTipoDeVeiculo  = document.getElementById('tipoDeVeiculo');
+const formMarcaDoVeiculo  = document.getElementById('marcaDoVeiculo');
+const formNomeDoVeiculo  = document.getElementById('nomeDoVeiculo');
+const formModeloDoVeiculo  = document.getElementById('modeloDoVeiculo');
 
-const tipo = document.getElementById('tipo');
-const tipoErro = document.querySelector('#tipol + span.erro');
+if(formTipoDeVeiculo) {
+  const tipo = document.getElementById('tipo');
+  const tipoError = document.querySelector('#tipo + span.error');
 
-email.addEventListener('input', function (event) {
-  // Each time the user types something, we check if the
-  // form fields are valid.
+  const usuario = document.getElementById('usuario');
+  const usuarioError = document.querySelector('#usuario + span.error');
 
-  if (email.validity.valid) {
-    // In case there is an error message visible, if the field
-    // is valid, we remove the error message.
-    emailError.textContent = ''; // Reset the content of the message
-    emailError.className = 'error'; // Reset the visual state of the message
-  } else {
-    // If there is still an error, show the correct error
-    showError();
+  usuario.addEventListener('input', function (event) {
+    if ( usuario.validity.valid ) {
+      usuarioError.textContent = '';
+      usuarioError.className = 'error';
+    } else {
+      showError();
+    }  
+  });
+
+  tipo.addEventListener('input', function (event) {
+    if ( tipo.validity.valid ) {
+      tipoError.textContent = '';
+      tipoError.className = 'error';
+    } else {
+      showError();
+    }  
+  });
+
+  formTipoDeVeiculo.addEventListener('submit', function (event) {
+    if( !usuario.validity.valid ) {
+      showError();
+      event.preventDefault();
+    }
+
+    else if( !tipo.validity.valid ) {
+      showError();
+      event.preventDefault();
+    }
+  });
+
+  function showError() {
+    if(usuario.validity.valueMissing) {
+      usuarioError.textContent = 'Informe seu usuário';
+      usuarioError.className = 'error active';
+    }
+    else if (tipo.validity.valueMissing) {
+      tipoError.textContent = 'Selecione o tipo de veículo';
+      tipoError.className = 'error active';
+    }
+  } 
+}
+
+else if(formMarcaDoVeiculo) {
+  const marca = document.getElementById('marca');
+  const marcaError = document.querySelector('#marca + span.error');
+
+  formMarcaDoVeiculo.addEventListener('submit', function (event) {
+    if(!marca.validity.valid) {
+      showError();
+      event.preventDefault();
+    }
+  });
+
+  function showError() {
+    if(marca.validity.valueMissing) {
+      marcaError.textContent = 'Selecione a marca do veículo';
+      marcaError.className = 'error active';
+    }
   }
-});
+}
 
-form.addEventListener('submit', function (event) {
-  // if the email field is valid, we let the form submit
+else if(formNomeDoVeiculo) {
+  const veiculo = document.getElementById('veiculo');
+  const veiculoError = document.querySelector('#veiculo + span.error');
 
-  if(!email.validity.valid) {
-    // If it isn't, we display an appropriate error message
-    showError();
-    // Then we prevent the form from being sent by canceling the event
-    event.preventDefault();
+  formNomeDoVeiculo.addEventListener('submit', function (event) {
+    if(!veiculo.validity.valid) {
+      showError();
+      event.preventDefault();
+    }
+  });
+
+  function showError() {
+    if(veiculo.validity.valueMissing) {
+      veiculoError.textContent = 'Selecione o nome do veículo';
+      veiculoError.className = 'error active';
+    }
   }
-});
+}
 
-function showError() {
-  if(email.validity.valueMissing) {
-    // If the field is empty
-    // display the following error message.
-    emailError.textContent = 'You need to enter an e-mail address.';
-  } else if(email.validity.typeMismatch) {
-    // If the field doesn't contain an email address
-    // display the following error message.
-    emailError.textContent = 'Entered value needs to be an e-mail address.';
-  } else if(email.validity.tooShort) {
-    // If the data is too short
-    // display the following error message.
-    emailError.textContent = `Email should be at least ${ email.minLength } characters; you entered ${ email.value.length }.`;
+else if(formModeloDoVeiculo) {
+  const modelo = document.getElementById('modelo');
+  const modeloError = document.querySelector('#modelo + span.error');
+
+  formModeloDoVeiculo.addEventListener('submit', function (event) {
+    if(!modelo.validity.valid) {
+      showError();
+      event.preventDefault();
+    }
+  });
+
+  function showError() {
+    if(modelo.validity.valueMissing) {
+      modeloError.textContent = 'Selecione o modelo do veículo';
+      modeloError.className = 'error active';
+    }
   }
-
-  // Set the styling appropriately
-  emailError.className = 'error active';
 }

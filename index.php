@@ -20,7 +20,6 @@
 <head>
 	<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="styles.css">
-	<script src="javascript.js"></script>
 </head>
 <html>
 <body>
@@ -34,7 +33,7 @@
 			//dump($_GET['name']);
 			//dump($request->query->get('name'));
 			//dump($request);
-			//dump($request->query->all());
+			dump($request->query->all());
 
 			//$response->setContent("Hello World!");
 			// $response->prepare($request);
@@ -90,5 +89,6 @@
 
 		?>
 	</div>
+	<script src="javascript.js"></script>
 </body>
 </html>
